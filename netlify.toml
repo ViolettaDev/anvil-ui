@@ -1,0 +1,8 @@
+# Demo hosting only. Not part of the kit — the packaging script excludes this
+# file, and nothing in src/ reads it.
+[build]
+  command = "pnpm build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

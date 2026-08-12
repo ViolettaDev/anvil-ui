@@ -1,0 +1,197 @@
+@import "tailwindcss";
+
+/**
+ * Anvil UI — the whole design system.
+ *
+ * Every component in this kit is styled from the tokens below and nothing else.
+ * There are no hard-coded colours anywhere in src/components, which is what lets
+ * you drop the kit into an existing project: rebind these variables to your own
+ * palette and every component follows.
+ *
+ * Tailwind v4 derives utilities from NAMESPACED theme variables. `--color-ink`
+ * gives you `text-ink` / `bg-ink` / `border-ink`; `--radius-btn` gives you
+ * `rounded-btn`; `--text-ui` gives you `text-ui`. A variable outside a known
+ * namespace generates NO class at all, silently — so if you add a token, keep
+ * the namespace prefix.
+ */
+@theme inline {
+  /* Text, in three weights of emphasis. */
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+
+  /* Surfaces. `surface` is the page, `card` is anything raised above it. */
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-line: var(--line);
+
+  /* The wash behind a modal. Its own token because it can NOT be derived from
+     the others: `ink` inverts with the theme, so an ink-based scrim would go
+     white in dark mode. A scrim is dark in both. */
+  --color-scrim: var(--scrim);
+
+  /* One accent. `tint` is its low-alpha wash, `ink` is text ON the accent,
+     `ring` is the focus ring (kept separate so it can carry more contrast). */
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-tint: var(--accent-tint);
+  --color-accent-ring: var(--accent-ring);
+
+  --color-danger: var(--danger);
+  --color-danger-tint: var(--danger-tint);
+
+  /* One layer for everything that portals to <body>: dialogs, menus, selects,
+     popovers, tooltips. They all sit at the SAME height on purpose — portals
+     mount in open order, so the last thing opened paints on top by DOM order,
+     which is exactly the behaviour you want when a select opens inside a modal.
+     The namespace is `--z-index-*`, not `--z-*`: a plain `--z-overlay` compiles
+     to no class at all, silently. */
+  --z-index-overlay: 50;
+
+  /* Small controls need their own radius, not the button's. `--radius-btn` is
+     8px, which on a 16px checkbox is half the side — it reads as a radio button
+     and users pick the wrong affordance. Overrides Tailwind's stock 2px
+     `rounded-sm`, which is too tight to match anything else here. */
+  --radius-sm: 0.25rem;
+  --radius-btn: 0.5rem;
+  --radius-card: 0.875rem;
+
+  --text-nano: 0.6875rem;
+  --text-ui: 0.8125rem;
+  --text-body: 0.9375rem;
+  /* One step above body, for the title of a raised surface (dialog, sheet,
+     card). Semibold body is not enough hierarchy when the description sits
+     directly under it. */
+  --text-lead: 1.125rem;
+}
+
+/**
+ * Light is the base. Dark is applied in two places on purpose:
+ *   - `@media (prefers-color-scheme: dark)` guarded by `:not([data-theme="light"])`
+ *     so the OS preference wins when the user has not chosen explicitly;
+ *   - `[data-theme="dark"]` so an explicit choice beats the OS in both directions.
+ * Define colours ONLY here. A colour whose only definition lives inside the media
+ * query never applies when no theme attribute is present.
+ */
+:root {
+  --ink: oklch(0.22 0.015 260);
+  --ink-2: oklch(0.46 0.012 260);
+  --ink-3: oklch(0.62 0.01 260);
+
+  --surface: oklch(0.985 0.003 260);
+  --card: oklch(1 0 0);
+  --line: oklch(0.9 0.008 260);
+  --scrim: oklch(0.22 0.015 260 / 0.45);
+
+  --accent: oklch(0.55 0.16 265);
+  --accent-ink: oklch(0.99 0 0);
+  --accent-tint: oklch(0.55 0.16 265 / 0.1);
+  --accent-ring: oklch(0.55 0.16 265 / 0.45);
+
+  --danger: oklch(0.55 0.19 25);
+  --danger-tint: oklch(0.55 0.19 25 / 0.1);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: oklch(0.95 0.008 260);
+    --ink-2: oklch(0.75 0.012 260);
+    --ink-3: oklch(0.58 0.012 260);
+
+    --surface: oklch(0.17 0.012 260);
+    --card: oklch(0.21 0.014 260);
+    --line: oklch(0.3 0.014 260);
+    --scrim: oklch(0.12 0.01 260 / 0.68);
+
+    --accent: oklch(0.72 0.14 265);
+    --accent-ink: oklch(0.17 0.012 260);
+    --accent-tint: oklch(0.72 0.14 265 / 0.16);
+    --accent-ring: oklch(0.72 0.14 265 / 0.5);
+
+    --danger: oklch(0.7 0.16 25);
+    --danger-tint: oklch(0.7 0.16 25 / 0.16);
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --ink: oklch(0.95 0.008 260);
+  --ink-2: oklch(0.75 0.012 260);
+  --ink-3: oklch(0.58 0.012 260);
+
+  --surface: oklch(0.17 0.012 260);
+  --card: oklch(0.21 0.014 260);
+  --line: oklch(0.3 0.014 260);
+  --scrim: oklch(0.12 0.01 260 / 0.68);
+
+  --accent: oklch(0.72 0.14 265);
+  --accent-ink: oklch(0.17 0.012 260);
+  --accent-tint: oklch(0.72 0.14 265 / 0.16);
+  --accent-ring: oklch(0.72 0.14 265 / 0.5);
+
+  --danger: oklch(0.7 0.16 25);
+  --danger-tint: oklch(0.7 0.16 25 / 0.16);
+
+  color-scheme: dark;
+}
+
+body {
+  background: var(--surface);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* One focus ring for the whole kit. Components add `focus-visible:` utilities
+   on top when they need a different shape, never a different colour. */
+:focus-visible {
+  outline: 2px solid var(--accent-ring);
+  outline-offset: 2px;
+}
+
+/* Respect the OS motion setting everywhere, so individual components do not
+   each have to remember `motion-reduce:`. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* See the safety net below — a reveal must not merely be instant here, it
+     must never have been hidden in the first place. */
+  [data-reveal] {
+    opacity: 1;
+    translate: none;
+  }
+}
+
+/**
+ * Scroll-reveal safety net for <Reveal> / <Stagger>.
+ *
+ * Those components paint their hidden state on the FIRST render — identical on
+ * server and client, which is the whole point — and only reveal from an
+ * IntersectionObserver created in an effect. Two situations exist where that
+ * observer never runs and the content would stay invisible forever:
+ *   - no JavaScript;
+ *   - reduced motion, where the entrance is unwanted anyway, and where
+ *     screenshot tooling usually parks (it forces the flag and never scrolls,
+ *     which is exactly how you end up with a gallery of blank sections).
+ * Both jump straight to the final state.
+ *
+ * Two details. Tailwind v4 emits translate utilities on the `translate`
+ * property, not `transform`, so `translate` is what gets reset. And these rules
+ * sit outside every @layer, which is what lets them beat `.opacity-0` without
+ * `!important` — utilities live in a layer, and unlayered always wins.
+ */
+@media (scripting: none) {
+  [data-reveal] {
+    opacity: 1;
+    translate: none;
+  }
+}

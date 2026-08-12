@@ -1,0 +1,22 @@
+# pnpm settings.
+#
+# Since pnpm v10 these live here — NOT in .npmrc, and NOT in the "pnpm" field of
+# package.json, which pnpm 11 ignores entirely.
+#
+# `allowBuilds` is an allowlist for postinstall scripts. pnpm blocks them by
+# default, which is the single most effective defence against a hijacked npm
+# package: the usual payload runs at install time. Every entry below is a
+# deliberate yes.
+#
+# pnpm scaffolds this file for you the first time it blocks something, filling
+# the values with the literal string "set this to true or false". Leave that in
+# place and `pnpm install` exits 1 with ERR_PNPM_IGNORED_BUILDS — and because
+# pnpm 11 re-runs a deps check before every script, `pnpm build` then fails
+# before Next.js is even reached, with a stack trace that points at pnpm rather
+# than at this file.
+allowBuilds:
+  # Next.js's image optimiser. Ships prebuilt binaries; the script only selects
+  # the right one for the platform.
+  sharp: true
+  # Native module resolver used by eslint's flat-config loader.
+  unrs-resolver: true

@@ -4,5 +4,13 @@
   command = "pnpm build"
   publish = ".next"
 
+[build.environment]
+  # Enciende la unica llamada a la accion de la demo (DemoGetKit). Vive aqui y
+  # no en el codigo a proposito: quien descarga el kit se lleva el componente
+  # pero no esta variable, asi que su copia nunca anuncia nuestra tienda.
+  NEXT_PUBLIC_VS_DEMO = "true"
+  # Alimenta canonical, Open Graph, robots.txt y sitemap.xml.
+  NEXT_PUBLIC_SITE_URL = "https://ui.violettadev.com"
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"

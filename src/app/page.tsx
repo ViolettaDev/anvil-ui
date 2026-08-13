@@ -13,6 +13,7 @@
  */
 
 import { Toaster } from "@/components/ui/Toaster";
+import { DemoGetKit } from "@/components/site/DemoGetKit";
 import { ThemeToggle } from "@/components/site/ThemeToggle";
 import {
   DatePickerDemo,
@@ -169,6 +170,8 @@ export default function Home() {
             management; the calendar grid, the keyboard model and the range logic are plain React
             you can read in one sitting.
           </p>
+
+          <DemoGetKit />
 
           <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_1fr]">
             <div className="rounded-card border border-line bg-card p-5">

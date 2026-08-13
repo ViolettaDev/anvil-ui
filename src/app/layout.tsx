@@ -1,10 +1,36 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+/**
+ * `metadataBase` es lo que convierte las rutas relativas de abajo en absolutas.
+ * Sin el, `canonical` y las imagenes de Open Graph salen como rutas sueltas y
+ * ni Google ni quien comparte el enlace pueden resolverlas.
+ *
+ * Sale de una variable porque quien descarga el kit lo despliega en su dominio,
+ * no en el nuestro: dejarlo fijo le regalaria un canonical apuntando aqui, que
+ * es la forma mas rapida de que su propia pagina no se indexe.
+ */
+const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://ui.violettadev.com";
+
 export const metadata: Metadata = {
-  title: "Anvil UI — React primitives for Next.js 16 + Tailwind v4",
+  metadataBase: new URL(SITE),
+  title: "Anvil UI — free React date, range and time pickers for Next.js 16",
   description:
-    "Accessible, themeable React primitives. Date, range and time pickers written by hand, with no calendar dependency. MIT.",
+    "23 accessible React components for Next.js 16 and Tailwind v4. The date, range and time pickers are written by hand — no react-day-picker, no date-fns, no dayjs. MIT.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: SITE,
+    siteName: "Anvil UI",
+    title: "Anvil UI — free React date, range and time pickers for Next.js 16",
+    description:
+      "23 accessible React components styled entirely from CSS variables. Pickers written by hand, no calendar library. MIT.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Anvil UI — free React pickers for Next.js 16",
+    description: "Date, range and time pickers with no calendar dependency. MIT.",
+  },
 };
 
 /**

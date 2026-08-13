@@ -8,4 +8,4 @@ out
 Thumbs.db
 coverage
 .pnpm-store
-tsconfig.tsbuildinfo
+*.tsbuildinfo

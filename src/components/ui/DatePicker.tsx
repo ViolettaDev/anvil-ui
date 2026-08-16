@@ -16,8 +16,11 @@
  *   date-times, never UTC. The empty string means "nothing selected".
  *   Those strings sort lexicographically in chronological order, which is why
  *   the min/max comparisons below are plain `<` and `>`.
- *   Parsing anchors at 12:00 LOCAL time (`new Date("2026-03-29T12:00:00")`, no
- *   trailing Z) so that a DST jump at midnight can never roll a day over.
+ *   Parsing appends `T12:00:00` and no trailing `Z`, which makes it a LOCAL
+ *   date-time. That matters: a bare `new Date("2026-03-29")` is parsed as UTC,
+ *   so `getDate()` returns the 28th anywhere west of Greenwich. Midday also
+ *   leaves twelve hours of slack either side, so a one-hour DST shift cannot
+ *   move the timestamp into a neighbouring day.
  *
  * Localisation without a dependency: pass `locale` (any BCP-47 tag) and month
  * and weekday names come from `Intl.DateTimeFormat`. It defaults to "en-US"

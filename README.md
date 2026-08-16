@@ -29,7 +29,10 @@ file.
 - **Dates cross the boundary as strings.** `"YYYY-MM-DD"`, never `Date` objects,
   never UTC. They sort chronologically as text, which is why the min/max checks
   are plain `<` and `>`.
-- **Parsing anchors at midday**, so a DST jump at midnight can never roll a day over.
+- **Parsing stays local.** `new Date("2026-03-29T12:00:00")` — with the time and
+  without the `Z`. A bare `new Date("2026-03-29")` is parsed as UTC, so `getDate()`
+  returns the 28th anywhere west of Greenwich. Midday leaves twelve hours of slack
+  either side of the day boundary.
 - **The full keyboard model**: arrows by day, PageUp/PageDown by month, Shift for
   years, Home/End, and a single tab stop for the whole grid.
 - **Localised with no dependency.** Pass a BCP-47 tag and month names come from

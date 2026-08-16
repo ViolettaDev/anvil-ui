@@ -26,8 +26,9 @@
  * `onChange` are ISO CALENDAR DATE strings, "YYYY-MM-DD", never Date objects
  * and never UTC date-times. "" means unset; a half-open range is
  * `("2026-03-04", "")`. The strings sort chronologically, hence the plain `<`
- * and `>` comparisons throughout. Parsing anchors at 12:00 local so a DST
- * change at midnight cannot roll a day over.
+ * and `>` comparisons throughout. Parsing appends `T12:00:00` with no `Z`, so
+ * it is a local date-time — a bare `new Date("2026-03-04")` parses as UTC and
+ * reports the previous day west of Greenwich.
  *
  * `locale` (BCP-47, default "en-US") feeds Intl.DateTimeFormat for month and
  * weekday names; every other string is a prop with an English default. The

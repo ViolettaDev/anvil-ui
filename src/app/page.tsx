@@ -243,8 +243,9 @@ export default function Home() {
           <p className="mt-3 max-w-2xl text-body leading-relaxed text-ink-2">
             Three fields, one shape of data: ISO calendar strings in, ISO calendar strings out.
             Never a Date object, never UTC, never a timezone silently applied to something that is
-            just a day on a wall calendar. Parsing anchors at midday local, so a DST jump at
-            midnight cannot roll a day over.
+            just a day on a wall calendar. Parsing appends the time and omits the Z, so it stays
+            local — a bare new Date(&quot;2026-03-29&quot;) is parsed as UTC and reports the day
+            before anywhere west of Greenwich.
           </p>
 
           <div className="mt-8 grid gap-6">

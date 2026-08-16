@@ -1,16 +1,26 @@
-# Demo hosting only. Not part of the kit — the packaging script excludes this
-# file, and nothing in src/ reads it.
+# Configuracion de despliegue de la demo publica (ui.violettadev.com).
+#
+# Aqui NO hay variables de entorno, y es deliberado. Este fichero es publico en
+# el repositorio, asi que cualquiera que clone y despliegue en Netlify hereda lo
+# que ponga. Dos de las que habia hacian dano de verdad:
+#
+#   NEXT_PUBLIC_VS_DEMO   encendia el boton "Download the kit — free", que
+#                         apunta a NUESTRA ficha de Gumroad. La puerta existe
+#                         precisamente para que la copia de otro no anuncie
+#                         nuestra tienda; publicarla en el repo la anulaba.
+#   NEXT_PUBLIC_SITE_URL  alimenta canonical, Open Graph, robots.txt y
+#                         sitemap.xml. Heredarla apunta todo eso a nuestro
+#                         dominio, que es la forma mas rapida de que la pagina
+#                         de quien clona no se indexe.
+#
+# Ambas viven ahora en Site configuration -> Environment variables del sitio de
+# Netlify, que es de donde no se copian solas.
+#
+# El kit no lo necesita: si clonas esto, `pnpm build` y despliega. Sin
+# NEXT_PUBLIC_SITE_URL, los metadatos caen a tu propio dominio.
 [build]
   command = "pnpm build"
   publish = ".next"
-
-[build.environment]
-  # Enciende la unica llamada a la accion de la demo (DemoGetKit). Vive aqui y
-  # no en el codigo a proposito: quien descarga el kit se lleva el componente
-  # pero no esta variable, asi que su copia nunca anuncia nuestra tienda.
-  NEXT_PUBLIC_VS_DEMO = "true"
-  # Alimenta canonical, Open Graph, robots.txt y sitemap.xml.
-  NEXT_PUBLIC_SITE_URL = "https://ui.violettadev.com"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"

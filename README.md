@@ -1,5 +1,15 @@
 # Anvil UI
 
+[![MIT](https://img.shields.io/badge/license-MIT-6d4aff)](./LICENSE)
+[![Next.js 16](https://img.shields.io/badge/Next.js-16-000)](https://nextjs.org)
+[![React 19](https://img.shields.io/badge/React-19-087ea4)](https://react.dev)
+[![Tailwind v4](https://img.shields.io/badge/Tailwind-v4-06b6d4)](https://tailwindcss.com)
+[![No calendar library](https://img.shields.io/badge/calendar%20library-none-0f7b57)](#why-the-pickers-are-the-point)
+
+**[Live demo &rarr; ui.violettadev.com](https://ui.violettadev.com)**
+
+![The date range picker open in dark mode, showing August and September side by side](./docs/preview-range-picker.jpg)
+
 Accessible React primitives for **Next.js 16 + React 19 + Tailwind v4**, styled entirely from CSS variables. MIT.
 
 The part you probably came for: **date, range and time pickers written by hand**, with no calendar library underneath. No `react-day-picker`, no `date-fns`, no `dayjs`. Radix supplies popover positioning and focus management; the calendar grid, the keyboard model and the range logic are plain React you can read in one sitting.
@@ -8,6 +18,26 @@ The part you probably came for: **date, range and time pickers written by hand**
 pnpm install
 pnpm dev        # http://localhost:3200 — every component, both themes
 ```
+
+## Why the pickers are the point
+
+Most kits hand you a date field that pulls in a calendar library, a date library
+and a plugin for the timezone edge cases. Here the 42-cell month, the week offset
+and the month arithmetic are about forty lines of pure functions at the top of the
+file.
+
+- **Dates cross the boundary as strings.** `"YYYY-MM-DD"`, never `Date` objects,
+  never UTC. They sort chronologically as text, which is why the min/max checks
+  are plain `<` and `>`.
+- **Parsing anchors at midday**, so a DST jump at midnight can never roll a day over.
+- **The full keyboard model**: arrows by day, PageUp/PageDown by month, Shift for
+  years, Home/End, and a single tab stop for the whole grid.
+- **Localised with no dependency.** Pass a BCP-47 tag and month names come from
+  `Intl.DateTimeFormat`. Every other string is a prop.
+
+Runtime dependencies: five Radix packages (popover, select, dropdown, dialog,
+tooltip) and `sonner` for toasts. That is the whole list — no date library, no
+CSS-in-JS, no icon package.
 
 ## What is in here
 

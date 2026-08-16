@@ -98,4 +98,4 @@ MIT — see [LICENSE](./LICENSE). Use it in commercial work, no attribution requ
 
 ---
 
-Built by [Violetta Studio](https://violettadev.com), who also sell [Next.js templates](https://violettadev.com) that ship these same primitives.
+Built by [Violetta Studio](https://violettadev.com).
